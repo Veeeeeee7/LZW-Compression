@@ -37,23 +37,29 @@ public class LZWCompression {
 
     public static String decode(ArrayList<Integer> l) {
         HashMap<Integer, String> dict = new HashMap<>();
-        for (int i = 0; i < 255; i++) {
+        for (int i = 0; i < 256; i++) {
             char c = (char) i;
             dict.put(i, c + "");
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(dict.get(l.get(0)));
         int count = 256;
-        String a = "";
+        char c = (char) l.get(0).intValue();
+        String a = c + "";
         for (int i : l) {
+            String b = "";
             if (dict.containsKey(i)) {
-                a += dict.get(i);
+                b += dict.get(i);
                 sb.append(dict.get(i));
+                dict.put(count, b + a);
+                a = b;
             } else {
+                sb.append(a);
                 dict.put(count, a);
                 count++;
             }
         }
+
         return sb.toString();
     }
 
