@@ -5,22 +5,17 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class LZWCompression {
-    HashMap<String, Integer> dict;
-
-    public LZWCompression() {
-        dict = new HashMap<>();
+    public static ArrayList<Integer> compress(String fileName) {
+        HashMap<String, Integer> dict = new HashMap<>();
         for (int i = 0; i < 255; i++) {
             char c = (char) i;
             dict.put(c + "", i);
         }
-    }
 
-    public ArrayList<Integer> compress(String fileName) {
         String content = readFile(fileName);
         char[] chars = content.toCharArray();
         ArrayList<Integer> l = new ArrayList<>();
 
-        int index = 0;
         int count = 256;
         String b = "";
         for (int i = 0; i < chars.length; i++) {
@@ -34,10 +29,35 @@ public class LZWCompression {
                 b = a;
             }
         }
+        if (!b.equals("")) {
+            l.add(dict.get(b));
+        }
         return l;
     }
 
-    private String readFile(String fileName) {
+    public static String decode(ArrayList<Integer> l) {
+        HashMap<Integer, String> dict = new HashMap<>();
+        for (int i = 0; i < 255; i++) {
+            char c = (char) i;
+            dict.put(i, c + "");
+        }
+
+        StringBuilder sb = new StringBuilder();
+        int count = 256;
+        String a = "";
+        for (int i : l) {
+            if (dict.containsKey(i)) {
+                a += dict.get(i);
+                sb.append(dict.get(i));
+            } else {
+                dict.put(count, a);
+                count++;
+            }
+        }
+        return sb.toString();
+    }
+
+    private static String readFile(String fileName) {
         StringBuilder content = new StringBuilder();
         try {
             File file = new File(fileName);
