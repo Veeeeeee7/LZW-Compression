@@ -15,20 +15,27 @@ public class LZWCompression {
         }
     }
 
-    public String compress(String fileName) {
+    public ArrayList<Integer> compress(String fileName) {
         String content = readFile(fileName);
         char[] chars = content.toCharArray();
         ArrayList<Integer> l = new ArrayList<>();
 
         int index = 0;
+        int count = 256;
         while (index < chars.length) {
             String a = chars[index] + "";
-            while (dict.containsKey(a)) {
+            while (index < chars.length && dict.containsKey(a)) {
                 index++;
                 a += chars[index];
             }
+            index--;
+            String b = a.substring(0, a.length() - 1);
+
+            l.add(dict.get(b));
+            dict.put(a, count);
+            count++;
         }
-        return "";
+        return l;
     }
 
     private String readFile(String fileName) {
