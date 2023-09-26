@@ -11,7 +11,7 @@ public class LZWCompression {
         dict = new HashMap<>();
         for (int i = 0; i < 255; i++) {
             char c = (char) i;
-            dict.put(Character.toString(c), i);
+            dict.put(c + "", i);
         }
     }
 
@@ -22,18 +22,17 @@ public class LZWCompression {
 
         int index = 0;
         int count = 256;
-        while (index < chars.length) {
-            String a = chars[index] + "";
-            while (index < chars.length && dict.containsKey(a)) {
-                index++;
-                a += chars[index];
+        String b = "";
+        for (int i = 0; i < chars.length; i++) {
+            String a = chars[i] + "";
+            if (dict.containsKey((b + a))) {
+                b += a;
+            } else {
+                l.add(dict.get(b));
+                dict.put(b + a, count);
+                count++;
+                b = a;
             }
-            index--;
-            String b = a.substring(0, a.length() - 1);
-
-            l.add(dict.get(b));
-            dict.put(a, count);
-            count++;
         }
         return l;
     }

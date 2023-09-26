@@ -7,6 +7,7 @@ public class Tester {
         LZWCompression l = new LZWCompression();
         ArrayList<Integer> a = l.compress("test");
 
+        System.out.println("WORKS");
         for (Integer i : a) {
             System.out.print(i + " s ");
         }
