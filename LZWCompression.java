@@ -46,12 +46,12 @@ public class LZWCompression {
         int count = 256;
         char c = (char) l.get(0).intValue();
         String a = c + "";
-        for (int i : l) {
+        for (int i = 1; i < l.size(); i++) {
             String b = "";
-            if (dict.containsKey(i)) {
-                b += dict.get(i);
-                sb.append(dict.get(i));
-                dict.put(count, b + a);
+            if (dict.containsKey(l.get(i))) {
+                b += dict.get(l.get(i));
+                sb.append(dict.get(l.get(i)));
+                dict.put(count, a + b.charAt(0));
                 a = b;
             } else {
                 sb.append(a);
