@@ -1,17 +1,29 @@
 import java.util.ArrayList;
 
 public class Tester {
-    public static void main(String[] args) {
-        // String a = "BOB";
-        // System.out.println(a.substring(0, a.length() - 1));
-        LZWCompression l = new LZWCompression();
-        ArrayList<Integer> a = l.compress("test");
+    public static void main(String[] args) throws Exception {
+        // ArrayList<Integer> codes = LZWCompression.compressToCodes("testing");
 
         // System.out.println("WORKS");
-        for (Integer i : a) {
-            System.out.print(i + ", ");
-        }
+        // for (Integer code : codes) {
+        // System.out.print(code + ", ");
+        // }
 
-        System.out.println("\n" + l.decode(a));
+        ArrayList<boolean[]> bins = LZWCompression.compress("testing");
+        System.out.println(LZWCompression.decode(bins));
+
+        // ArrayList<boolean[]> bins = LZWCompression.compress("testing");
+        // StringBuilder sb = new StringBuilder();
+        // for (boolean[] bits : bins) {
+        // for (boolean bit : bits) {
+        // if (bit) {
+        // sb.append("1");
+        // } else {
+        // sb.append("0");
+        // }
+        // }
+        // // sb.append(", ");
+        // }
+        // System.out.println(sb.toString());
     }
 }
