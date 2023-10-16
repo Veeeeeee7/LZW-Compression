@@ -22,12 +22,24 @@ public class LZWCompression {
         int count = 256;
         String b = "";
         for (int i = 0; i < chars.length; i++) {
+            if (count > MAX) {
+                for (char c : b.toCharArray()) {
+                    System.out.println(c + " : " + dict.get(c + ""));
+                    l.add(dict.get(c + ""));
+                }
+                for (int j = i; j < chars.length; j++) {
+                    System.out.println(chars[j] + " : " + dict.get(chars[j] + ""));
+                    l.add(dict.get(chars[j] + ""));
+                }
+                return l;
+            }
             String a = chars[i] + "";
             if (dict.containsKey((b + a))) {
                 b += a;
             } else {
                 l.add(dict.get(b));
                 dict.put(b + a, count);
+                System.out.println(count + " : " + b + a);
                 count++;
                 b = a;
             }
@@ -43,6 +55,7 @@ public class LZWCompression {
         ArrayList<boolean[]> bins = new ArrayList<>();
 
         for (int code : codes) {
+            System.out.println(code);
             boolean[] ret = new boolean[BITS];
             for (int i = 0; i < BITS; i++) {
                 ret[BITS - 1 - i] = (1 << i & code) != 0;
@@ -64,6 +77,13 @@ public class LZWCompression {
         char c = (char) l.get(0).intValue();
         String a = c + "";
         for (int i = 1; i < l.size(); i++) {
+            if (count > MAX) {
+                for (int j = i; j < l.size(); j++) {
+                    System.out.println(dict.get(l.get(j)) + " : " + l.get(j).toString());
+                    sb.append(dict.get(l.get(j)));
+                }
+                return sb.toString();
+            }
             String b = "";
             if (dict.containsKey(l.get(i))) {
                 b += dict.get(l.get(i));
