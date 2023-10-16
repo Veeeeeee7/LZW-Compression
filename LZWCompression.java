@@ -55,7 +55,6 @@ public class LZWCompression {
         ArrayList<boolean[]> bins = new ArrayList<>();
 
         for (int code : codes) {
-            System.out.println(code);
             boolean[] ret = new boolean[BITS];
             for (int i = 0; i < BITS; i++) {
                 ret[BITS - 1 - i] = (1 << i & code) != 0;
@@ -76,6 +75,9 @@ public class LZWCompression {
         int count = 256;
         char c = (char) l.get(0).intValue();
         String a = c + "";
+        if (!dict.containsKey(l.get(1))) {
+            dict.put(count, a + a);
+        }
         for (int i = 1; i < l.size(); i++) {
             if (count > MAX) {
                 for (int j = i; j < l.size(); j++) {

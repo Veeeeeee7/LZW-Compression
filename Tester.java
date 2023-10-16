@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import javax.sound.midi.Soundbank;
+
 public class Tester {
     public static void main(String[] args) throws Exception {
         // ArrayList<Integer> codes = LZWCompression.compressToCodes("testing");
@@ -9,8 +11,9 @@ public class Tester {
         // System.out.print(code + ", ");
         // }
 
-        ArrayList<boolean[]> bins = LZWCompression.compress("testing");
+        ArrayList<boolean[]> bins = LZWCompression.compress("testing2");
         System.out.println(LZWCompression.decode(bins));
+        System.out.println("AAABBABABBAB");
 
         // ArrayList<boolean[]> bins = LZWCompression.compress("testing");
         // StringBuilder sb = new StringBuilder();
